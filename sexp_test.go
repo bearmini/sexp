@@ -14,20 +14,20 @@ func TestParse(t *testing.T) {
 		Expected *Sexp
 	}{
 		{
-			Name:     "pattern 1 - empty",
-			Pattern:  `()`,
+			Name:    "pattern 1 - empty",
+			Pattern: `()`,
 			Expected: &Sexp{
-				Atom: nil,
+				Atom:     nil,
 				Children: []*Sexp{},
 			},
 		},
 		{
-			Name:     "pattern 2 - only a symbol",
-			Pattern:  `(a)`,
+			Name:    "pattern 2 - only a symbol",
+			Pattern: `(a)`,
 			Expected: &Sexp{
 				Atom: nil,
-				Children:[]*Sexp{
-					{Atom:&Token{Type:TokenTypeSymbol, Value:"a"}},
+				Children: []*Sexp{
+					{Atom: &Token{Type: TokenTypeSymbol, Value: "a"}},
 				},
 			},
 		},
@@ -37,9 +37,9 @@ func TestParse(t *testing.T) {
 			Expected: &Sexp{
 				Atom: nil,
 				Children: []*Sexp{
-					{Atom: &Token{Type:TokenTypeSymbol, Value:"a"}},
-					{Atom: &Token{Type:TokenTypeSymbol, Value:"b"}},
-					{Atom: &Token{Type:TokenTypeSymbol, Value:"c"}},
+					{Atom: &Token{Type: TokenTypeSymbol, Value: "a"}},
+					{Atom: &Token{Type: TokenTypeSymbol, Value: "b"}},
+					{Atom: &Token{Type: TokenTypeSymbol, Value: "c"}},
 				},
 			},
 		},
@@ -49,7 +49,7 @@ func TestParse(t *testing.T) {
 			Expected: &Sexp{
 				Atom: nil,
 				Children: []*Sexp{
-					{Atom: &Token{Type:TokenTypeSymbol, Value:"a"}},
+					{Atom: &Token{Type: TokenTypeSymbol, Value: "a"}},
 					{
 						Atom: nil,
 						Children: []*Sexp{
@@ -61,12 +61,27 @@ func TestParse(t *testing.T) {
 			},
 		},
 		{
+			Name:     "pattern 5 - no parens",
+			Pattern:  "",
+			Expected: nil,
+		},
+		{
+			Name:     "pattern 6 - incomplete",
+			Pattern:  "(a",
+			Expected: nil,
+		},
+		{
+			Name:     "pattern 7 - incomplete, nested",
+			Pattern:  "(a (b) (",
+			Expected: nil,
+		},
+		{
 			Name:    "pattern - wast 1",
 			Pattern: `(assert_return (invoke "add" (i32.const 1) (i32.const 1)) (i32.const 2))`,
 			Expected: &Sexp{
 				Atom: nil,
 				Children: []*Sexp{
-					{Atom: &Token{Type: TokenTypeSymbol, Value:"assert_return"}},
+					{Atom: &Token{Type: TokenTypeSymbol, Value: "assert_return"}},
 					{
 						Atom: nil,
 						Children: []*Sexp{
@@ -104,7 +119,7 @@ func TestParse(t *testing.T) {
 			Expected: &Sexp{
 				Atom: nil,
 				Children: []*Sexp{
-					{Atom: &Token{Type: TokenTypeSymbol, Value:"assert_trap"}},
+					{Atom: &Token{Type: TokenTypeSymbol, Value: "assert_trap"}},
 					{
 						Atom: nil,
 						Children: []*Sexp{

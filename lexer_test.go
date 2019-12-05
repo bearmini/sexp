@@ -49,6 +49,11 @@ func TestNextToken(t *testing.T) {
 				{Type: TokenTypeCloseParen, Value: ")"},
 			},
 		},
+		{
+			Name:     "pattern 3",
+			Pattern:  "",
+			Expected: []*Token{},
+		},
 	}
 
 	for _, data := range testData {
@@ -218,7 +223,6 @@ func TestUnread(t *testing.T) {
 	}
 
 }
-
 
 func TestReadString(t *testing.T) {
 	testData := []struct {

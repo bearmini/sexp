@@ -7,7 +7,7 @@ import (
 )
 
 type Sexp struct {
-	Atom *Token
+	Atom     *Token
 	Children []*Sexp
 }
 
@@ -18,6 +18,9 @@ func Parse(str string) (*Sexp, error) {
 
 func parse(l *Lexer) (*Sexp, error) {
 	token := l.NextToken()
+	if token == nil {
+		return nil, nil
+	}
 	switch token.Type {
 	case TokenTypeSymbol, TokenTypeString, TokenTypeNumber:
 		return &Sexp{Atom: token}, nil
@@ -28,6 +31,7 @@ func parse(l *Lexer) (*Sexp, error) {
 	}
 
 	children := []*Sexp{}
+	closed := false
 
 loop:
 	for {
@@ -50,8 +54,13 @@ loop:
 		case TokenTypeSymbol, TokenTypeString, TokenTypeNumber:
 			children = append(children, &Sexp{Atom: token})
 		case TokenTypeCloseParen:
+			closed = true
 			break loop
 		}
+	}
+
+	if !closed {
+		return nil, nil
 	}
 
 	return &Sexp{Children: children}, nil
