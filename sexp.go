@@ -1,6 +1,7 @@
 package sexp
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/pkg/errors"
@@ -64,4 +65,16 @@ loop:
 	}
 
 	return &Sexp{Children: children}, nil
+}
+
+func (s *Sexp) String() string {
+	if s.Atom != nil {
+		return s.Atom.Value
+	}
+
+	cs := []string{}
+	for _, c := range s.Children {
+		cs = append(cs, c.String())
+	}
+	return fmt.Sprintf("(%s)", strings.Join(cs, " "))
 }
