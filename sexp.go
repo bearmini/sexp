@@ -17,6 +17,14 @@ func Parse(str string) (*Sexp, error) {
 	return parse(l)
 }
 
+func MustParse(str string) *Sexp {
+	s, err := Parse(str)
+	if err != nil {
+		panic(err)
+	}
+	return s
+}
+
 func parse(l *Lexer) (*Sexp, error) {
 	token := l.NextToken()
 	if token == nil {
