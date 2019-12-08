@@ -54,6 +54,15 @@ func TestNextToken(t *testing.T) {
 			Pattern:  "",
 			Expected: []*Token{},
 		},
+		{
+			Name:    "pattern 4 - hex",
+			Pattern: "(0x1234567890abcDEF)",
+			Expected: []*Token{
+				{Type: TokenTypeOpenParen, Value: "("},
+				{Type: TokenTypeNumber, Value: "0x1234567890abcDEF"},
+				{Type: TokenTypeCloseParen, Value: ")"},
+			},
+		},
 	}
 
 	for _, data := range testData {

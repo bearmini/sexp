@@ -4,20 +4,21 @@ import (
 	"bufio"
 	"errors"
 	"io"
+	"strings"
 	"unicode"
 )
 
 type Lexer struct {
-	br *bufio.Reader
+	br      *bufio.Reader
 	history []*Token
-	unread []*Token
+	unread  []*Token
 }
 
 func NewLexer(r io.Reader) *Lexer {
 	return &Lexer{
-		br: bufio.NewReader(r),
+		br:      bufio.NewReader(r),
 		history: []*Token{},
-		unread: []*Token{},
+		unread:  []*Token{},
 	}
 }
 
@@ -153,12 +154,14 @@ func isNumberStartRune(r rune) bool {
 	return false
 }
 
+const numberRunes = "-.xABCDEFabcdef"
+
 func isNumberRune(r rune) bool {
 	if unicode.IsNumber(r) {
 		return true
 	}
 
-	if r == '-' || r == '.' || r == 'e' {
+	if strings.ContainsRune(numberRunes, r) {
 		return true
 	}
 
