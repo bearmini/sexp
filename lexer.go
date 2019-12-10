@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"errors"
 	"io"
-	"strings"
 	"unicode"
 )
 
@@ -154,18 +153,20 @@ func isNumberStartRune(r rune) bool {
 	return false
 }
 
-const numberRunes = "-.xABCDEFabcdef"
+const numberRunes = "-.pxABCDEFabcdef"
 
 func isNumberRune(r rune) bool {
-	if unicode.IsNumber(r) {
-		return true
+	if r == '(' || r == ')' {
+		return false
+	}
+	if r == '"' {
+		return false
+	}
+	if unicode.IsSpace(r) {
+		return false
 	}
 
-	if strings.ContainsRune(numberRunes, r) {
-		return true
-	}
-
-	return false
+	return true
 }
 
 func readSymbol(br *bufio.Reader) (string, error) {
