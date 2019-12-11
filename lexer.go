@@ -146,14 +146,12 @@ func isNumberStartRune(r rune) bool {
 		return true
 	}
 
-	if r == '-' {
+	if r == '-' || r == '+' {
 		return true
 	}
 
 	return false
 }
-
-const numberRunes = "-.pxABCDEFabcdef"
 
 func isNumberRune(r rune) bool {
 	if r == '(' || r == ')' {
